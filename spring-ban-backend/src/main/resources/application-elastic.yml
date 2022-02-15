@@ -1,0 +1,5 @@
+spring:
+  # Désactive Hibernate / JPA / Datasource / TransactionManager
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration, org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration, org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration
+
+elastic.host: ${ELASTIC_HOST:localhost}:${ELASTIC_PORT:9200}

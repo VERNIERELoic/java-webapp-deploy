@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${JDBC_URL:localhost}:${JDBC_PORT:5432}/${JDBC_DB:postgres}
+    username: ${JDBC_USER:postgres}
+    password: ${JDBC_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+  # Désactive les configurations d'elasticsearch
+  autoconfigure.exclude: org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration,org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchRepositoriesAutoConfiguration
+
+  # Permet l'upload de gros fichier (4GO le dernier de la BAN France)
+  servlet:
+    multipart:
+      max-file-size: 6GB
+      max-request-size: 6GB
+
+  # Les batchs sont lances suites a des calls API, pas au lancement
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+
+jco:
+  # Nombre de thread allant faire le travail d'import en parallèle
+  pool-size: ${POOL_SIZE:4}
+
+  # Permet d'importer un fichier sans passer par un upload
+  default-file: '/tmp/adresses-france.csv'

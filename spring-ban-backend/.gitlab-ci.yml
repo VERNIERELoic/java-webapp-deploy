@@ -1,0 +1,70 @@
+---
+default:
+  tags:
+    - devops
+
+variables:
+  IMAGENAME : '${DOCKERHUB_USER}/back-ban'
+  GIT_DEPTH: 0
+
+stages:
+  - build
+  - test
+  - docker
+  - deploy-back
+
+image: maven:3.6.3-jdk-11
+
+
+build-back:
+  stage: build
+  script:
+    - mvn package -DskipTest
+  artifacts:
+    paths:
+      - target/*.jar
+  
+
+test-back: &test_stage 
+  stage: test
+  script:
+    - mvn test
+
+sonarqube-check:
+  <<: *test_stage 
+  variables:
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    GIT_DEPTH: "0"
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - mvn verify sonar:sonar
+  allow_failure: true
+
+dependencies_check:
+  <<: *test_stage
+  script:
+    - mvn site
+  artifacts:
+    paths:
+      - target/site
+
+deploy-back:
+  image:
+    name: bitnami/kubectl
+    entrypoint: [""]
+  stage: deploy-back
+  script:
+    - cp $KUBE_CONFIG ./config
+    - kubectl apply --kubeconfig ./config -f back-ban-eola.k8s.granux.fr.yaml
+  
+build-docker-image:
+  stage: docker
+  image: docker
+  script:
+    - docker build -t ${IMAGENAME} -f Dockerfile .
+    - docker login -u ${DOCKERHUB_USER} -p ${DOCKERHUB_TOKEN}
+    - docker push ${IMAGENAME}
+    - docker image rm ${IMAGENAME}

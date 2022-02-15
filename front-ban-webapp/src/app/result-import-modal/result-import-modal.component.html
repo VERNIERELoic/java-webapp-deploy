@@ -1,0 +1,39 @@
+<table mat-table [dataSource]="results" class="mat-elevation-z8">
+  <ng-container matColumnDef="exitStatus">
+    <th mat-header-cell *matHeaderCellDef> Status</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon aria-hidden="false" aria-label="Example home icon">{{element.exitStatus | statusIcon}}</mat-icon>
+    </td>
+  </ng-container>
+  <ng-container matColumnDef="file">
+    <th mat-header-cell *matHeaderCellDef> Fichier</th>
+    <td mat-cell *matCellDef="let element"> {{element.file}} </td>
+  </ng-container>
+  <ng-container matColumnDef="details">
+    <th mat-header-cell *matHeaderCellDef> Détails</th>
+    <td mat-cell *matCellDef="let element"> {{element.details}} </td>
+  </ng-container>
+  <ng-container matColumnDef="duration">
+    <th mat-header-cell *matHeaderCellDef> Duration</th>
+    <td mat-cell *matCellDef="let element"> {{element.duration}} </td>
+  </ng-container>
+  <ng-container matColumnDef="writeCount">
+    <th mat-header-cell *matHeaderCellDef> Nb d'écriture</th>
+    <td mat-cell *matCellDef="let element"> {{element.writeCount}} </td>
+  </ng-container>
+  <ng-container matColumnDef="skipReadCount">
+    <th mat-header-cell *matHeaderCellDef> Nb ligne skip</th>
+    <td mat-cell *matCellDef="let element"> {{element.skipReadCount}} </td>
+  </ng-container>
+  <ng-container matColumnDef="errors">
+    <th mat-header-cell *matHeaderCellDef> Erreurs</th>
+    <td mat-cell *matCellDef="let element">
+      <button mat-button *ngIf="element.errors.length > 0" (click)="selected = element">View</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<div *ngIf="selected">
+  <p *ngFor="let error of selected.errors">{{error}}</p>
+</div>

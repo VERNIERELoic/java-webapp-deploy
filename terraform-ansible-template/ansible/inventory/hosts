@@ -1,0 +1,12 @@
+[front_group]
+front ansible_host=51.89.224.252
+front ansible_host=51.89.226.17
+
+
+[back_group]
+back ansible_host=51.89.224.153
+back ansible_host=51.89.175.194
+
+[others]
+reverse_proxy ansible_host=51.89.226.248
+bdd ansible_host=51.89.224.50

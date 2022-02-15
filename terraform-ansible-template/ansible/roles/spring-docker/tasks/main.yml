@@ -1,0 +1,19 @@
+- name: Make sure Docker Daemon is launched
+  systemd:
+    state: started
+    name: docker
+
+- name: Start container Spring with exposed port 8090
+  community.docker.docker_container:
+    name: spring-web
+    image: "{{ spring_image }}"
+    state: started
+    restart_policy: always
+    env:
+      JDBC_URL: "{{ hostvars['bdd'].ansible_host }}"
+      JDBC_DB : postgres
+      JDBC_USER : postgres
+      JDBC_PASSWORD : postgres
+    ports:
+      - 8090:8080
+

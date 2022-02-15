@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-deployment
+spec:
+  selector:
+    matchLabels:
+      app: back-ban
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: back-ban
+    spec:
+      containers:
+      - name: back-ban
+        image: victordrnd/back-ban
+        ports:
+        - containerPort: 8080
+        env:
+          - name: JDBC_URL
+            value: bdd-ban-service
+          - name: JDBC_DB
+            value: postgres
+          - name: JDBC_USER
+            value: postgres
+          - name: JDBC_PASSWORD
+            value: postgres
+
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: back-ban-service
+spec:
+  selector:
+    app: back-ban
+  ports:
+    - port: 8080
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: back-deploy-ingress
+spec:
+  tls:
+  rules:
+  - host: back-ban-eola.k8s.granux.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: back-ban-service
+            port:
+              number: 8080

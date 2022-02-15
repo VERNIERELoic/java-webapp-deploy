@@ -1,0 +1,72 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: front-config
+data:
+  config.json: | 
+    {
+      "url": "https://back-ban-eola.k8s.granux.fr"
+    }
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-deployment
+spec:
+  selector:
+    matchLabels:
+      app: front-ban
+  replicas: 2 # tells deployment to run 2 pods matching the template
+  template:
+    metadata:
+      labels:
+        app: front-ban
+    spec:
+      containers:
+        - name: front-ban
+          image: victordrnd/front-ban
+          ports:
+          - containerPort: 80
+          volumeMounts:
+          - name: front-volume
+            mountPath: /usr/share/nginx/html/assets
+      volumes:
+        - name: front-volume
+          configMap:
+            name: front-config
+            items:
+            - key: config.json
+              path : config.json 
+
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: front-ban-service
+spec:
+  selector:
+    app: front-ban
+  ports:
+    - port: 80
+
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: front-deploy-ingress
+spec:
+  tls:
+  rules:
+  - host: front-ban-eola.k8s.granux.fr
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: front-ban-service
+            port:
+              number: 80

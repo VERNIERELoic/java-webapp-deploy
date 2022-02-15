@@ -1,0 +1,25 @@
+- name: Make sure Docker Daemon is launched
+  systemd:
+    state: started
+    name: docker
+
+- name: Deploy database Docker volume
+  community.docker.docker_volume:
+    name: database_vol
+
+
+- name: Start container Postgres with exposed port (BUT NOT START AT BOOT !!!)
+  community.docker.docker_container:
+    name: bdd-web
+    image: "{{ postgres_image }}"
+    state: started
+    restart_policy: always
+    env:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - database_vol:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+

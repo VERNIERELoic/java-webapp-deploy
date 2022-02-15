@@ -1,0 +1,4 @@
+---
+nginx_image: victordrnd/front-ban
+postgres_image: postgres:14.1
+spring_image: victordrnd/back-ban

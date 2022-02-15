@@ -1,0 +1,43 @@
+version: '3.7'
+services:
+  web-front-ban:
+    image: victordrnd/front-ban
+    container_name: web_front_ban
+    restart: always
+    ports:
+      - 8080:80
+
+  bdd_postgres:
+    image: postgres:14.1
+    container_name: postgres_springboot
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - database_vol:/var/lib/postgresql/data
+    networks:
+      - net_ban
+  
+  backend:
+    image: victordrnd/back-ban
+    container_name: back-ban
+    depends_on:
+      - bdd_postgres
+    environment:
+      JDBC_URL: bdd_postgres
+      JDBC_DB : postgres
+      JDBC_USER : postgres
+      JDBC_PASSWORD : postgres
+    ports:
+      - 8090:8080
+    networks:
+      - net_ban
+
+
+volumes:
+  database_vol: {}
+
+networks:
+  net_ban: {}

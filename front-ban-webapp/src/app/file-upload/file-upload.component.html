@@ -1,0 +1,3 @@
+<button type="button" [disabled]="uploading" mat-raised-button (click)="fileInput.click()">Importer un fichier</button>
+<input hidden multiple accept=".csv" (change)="onFileSelected($event)" #fileInput type="file" id="file">
+<mat-progress-bar mode="indeterminate" *ngIf="uploading"></mat-progress-bar>

@@ -1,0 +1,37 @@
+- name: Create a traefik directory
+  ansible.builtin.file:
+    path: /etc/traefik
+    state: directory
+    mode: '0755'
+
+- name: Create a traefik directory
+  ansible.builtin.file:
+    path: /etc/traefik/dynamic
+    state: directory
+    mode: '0755'
+
+- name: Copy Traefik config files
+  template: src={{item.src}} dest={{item.dest}}
+  with_items:
+    - { src: 'templates/traefik/dynamic/back.eola.space.yml.j2', dest: '/etc/traefik/dynamic/back.eola.space.yml' }
+    - { src: 'templates/traefik/dynamic/front.eola.space.yml.j2', dest: '/etc/traefik/dynamic/front.eola.space.yml' }
+
+- name: Make sure Docker Daemon is launched
+  systemd:
+    state: started
+    name: docker
+
+- name: Start container on 80
+  community.docker.docker_container:
+    image: traefik
+    container_name: traefik
+    command:
+      - "--api.insecure=true"
+      - "--entrypoints.web.address=:80"
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /etc/traefik/traefik.yaml:/etc/traefik/traefik.yaml
+      - /etc/traefik/dynamic:/etc/traefik/dynamic

@@ -1,0 +1,17 @@
+# http routing section
+http:
+  routers:
+    https-front-router: 
+      rule: "Host(`back.eola.space`)"
+      service : front-ban
+  
+  services:
+    # Define how to reach an existing service on our infrastructure
+    front-ban:
+      loadBalancer:
+        servers:
+        {% for host in groups['back_group'] %}
+        - url: http://{{hostvars[host]['ansible_host']}}:8090
+        {% endfor %}
+
+

@@ -1,0 +1,36 @@
+
+- hosts: reverse_proxy
+  name: Traefik setup with Docker
+  vars_files:
+    - vars/default.yml
+  roles:
+    - docker-install
+    - traefik-docker
+
+
+- hosts: front_group
+  name: Nginx setup with Docker
+  vars_files:
+    - vars/default.yml
+  roles:
+    - docker-install
+    - nginx-docker
+    - spring-docker
+
+
+- hosts: back_group
+  name: Spring setup with Docker
+  vars_files:
+    - vars/default.yml
+  roles:
+    - docker-install
+    - spring-docker
+
+
+- hosts: bdd
+  name: Postgres setup with Docker
+  vars_files:
+    - vars/default.yml
+  roles:
+    - docker-install
+    - postgres-docker

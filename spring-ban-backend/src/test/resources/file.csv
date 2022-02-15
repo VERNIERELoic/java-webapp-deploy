@@ -1,0 +1,11 @@
+id;id_fantoir;numero;rep;nom_voie;code_postal;code_insee;nom_commune;code_insee_ancienne_commune;nom_ancienne_commune;x;y;lon;lat;type_position;alias;nom_ld;libelle_acheminement;nom_afnor;source_position;source_nom_voie;certification_commune
+38002_wg4wtw_00010;;10;;Allée des Terrasses;38190;38002;Les Adrets;;;934924.86;6466395.56;5.99575;45.256792;;;Prapoutel;LES ADRETS;ALLEE DES TERRASSES;commune;commune;0
+38002_wg4wtw_00020;;20;;Allée des Terrasses;38190;38002;Les Adrets;;;934928.44;6466386.03;5.995791;45.256705;;;Prapoutel;LES ADRETS;ALLEE DES TERRASSES;commune;commune;0
+38002_wg4wtw_00030;;30;;Allée des Terrasses;38190;38002;Les Adrets;;;934907.86;6466390.36;5.995531;45.256751;;;Prapoutel;LES ADRETS;ALLEE DES TERRASSES;commune;commune;0
+38002_wg4wtw_00040;;40;;Allée des Terrasses;38190;38002;Les Adrets;;;934911.13;6466382.81;5.995569;45.256682;;;Prapoutel;LES ADRETS;ALLEE DES TERRASSES;commune;commune;0
+38002_wngc6j_00035;;35;;Chemin des Bruns;38190;38002;Les Adrets;;;932376.82;6468014.98;5.964063;45.272229;;;;LES ADRETS;CHEMIN DES BRUNS;commune;commune;0
+38002_wngc6j_00038;;38;;Chemin des Bruns;38190;38002;Les Adrets;;;932319.18;6468020.26;5.963331;45.272296;;;;LES ADRETS;CHEMIN DES BRUNS;commune;commune;0
+38002_wngc6j_00058;;58;;Chemin des Bruns;38190;38002;Les Adrets;;;932337.1;6468000.59;5.96355;45.272113;;;;LES ADRETS;CHEMIN DES BRUNS;commune;commune;0
+38002_wngc6j_00068;;68;;Chemin des Bruns;38190;38002;Les Adrets;;;932363.26;6467997.69;5.963882;45.272078;;;;LES ADRETS;CHEMIN DES BRUNS;commune;commune;0
+38002_wngc6j_00105;;105;;Chemin des Bruns;38190;38002;Les Adrets;;;932394.88;6468010.43;5.964291;45.272182;;;;LES ADRETS;CHEMIN DES BRUNS;commune;commune;0
+38002_wngc6j_00105;;105;;STRING_LON_LAT;38190;38002;Les Adrets;;;932394.88;6468010.43;STRING_LON_LAT;STRING_LON_LAT;;;;LES ADRETS;STRING_LON_LAT;commune;commune;0
